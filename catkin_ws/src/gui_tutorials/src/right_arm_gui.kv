@@ -1,0 +1,711 @@
+FloatLayout:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: 'Right Arm GUI'
+        size_hint: None, None
+        size: 300, 300
+        bold: True
+        id: test
+        pos_hint: {'center_x':0.5, 'center_y':0.97}
+
+    # MOTORS
+
+    Label:
+        text: 'MOTORS'
+        size_hint: None, None
+        size: 300, 300
+        bold: True
+        pos_hint: {'center_x':0.08, 'center_y':0.90}
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 1
+        size_hint: None, None
+        width: 900
+        height: 350 
+        pos_hint: {'center_x':0.30, 'center_y':0.67}
+
+        
+        
+        GridLayout:
+            cols: 6
+            Label:
+                text: 'SENSOR'
+            Label:
+                text: 'ID'
+            Label:
+                text: 'SLIDER CONTROL'
+            Label:
+                text: 'GOAL POS'
+            Label:
+                text: 'CURR POS'
+            Label:
+                text: 'SEND POS'
+            # Motor 1
+            CheckBox:
+                id: m1_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m1_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '1'
+                id: m1_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m1_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)
+                #width: 200
+            TextInput:
+                id: m1_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m1_slider.value)
+            Label:
+                text: str(m1_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub1
+                text: 'Pub'
+                on_press:app.send_position(m1_id.text, m1_slider.value, "pub1")
+            # Motor 2
+            CheckBox:
+                id: m2_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m2_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '3'
+                id: m2_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m2_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m2_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m2_slider.value)
+            Label:
+                text: str(m2_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub2
+                text: 'Pub'
+                on_press:app.send_position(m2_id.text, m2_slider.value, "pub2")
+
+            # Motor 3
+            CheckBox:
+                id: m3_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m3_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '5'
+                id: m3_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m3_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m3_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m3_slider.value)
+            Label:
+                text: str(m3_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub3
+                text: 'Pub'
+                on_press:app.send_position(m3_id.text, m3_slider.value, "pub3")
+
+            # Motor 4
+            CheckBox:
+                id: m4_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m4_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '7'
+                id: m4_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m4_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m4_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m4_slider.value)
+            Label:
+                text: str(m4_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub4
+                text: 'Pub'
+                on_press:app.send_position(m4_id.text, m4_slider.value, "pub4")
+
+            # Motor 5
+            CheckBox:
+                id: m5_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m5_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '9'
+                id: m5_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m5_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m5_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m5_slider.value)
+            Label:
+                text: str(m5_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub5
+                text: 'Pub'
+                on_press:app.send_position(m5_id.text, m5_slider.value, "pub5")
+
+            # Motor 6
+            CheckBox:
+                id: m6_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m6_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '11'
+                id: m6_id
+                color: (0,0,1,1)
+                size_hint_x: .40
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m6_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m6_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m6_slider.value)
+            Label:
+                text: str(m6_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub6
+                text: 'Pub'
+                on_press:app.send_position(m6_id.text, m6_slider.value, "pub6")
+
+            # Motor 7
+            CheckBox:
+                id: m7_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m7_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '13'
+                id: m7_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m7_slider
+                value: 0
+                min: -180
+                max: 180
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m7_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m7_slider.value)
+            Label:
+                text: str(m7_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub7
+                text: 'Pub'
+                on_press:app.send_position(m7_id.text, m7_slider.value, "pub7")
+            
+            #hand motors
+            CheckBox:
+                id: m8_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m8_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '31'
+                id: m8_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        
+            Slider:
+                id: m8_slider
+                value: 0
+                min: 0
+                max: 5
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m8_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m8_slider.value)
+            Label:
+                text: str(m8_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub8
+                text: 'Pub'
+                on_press:app.send_position(m8_id.text, m8_slider.value, "pub8")
+            
+
+            
+            CheckBox:
+                id: m9_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m9_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '33'
+                id: m9_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m9_slider
+                value: 0
+                min: 0
+                max: 5
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m9_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m9_slider.value)
+            Label:
+                text: str(m9_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub9
+                text: 'Pub'
+                on_press:app.send_position(m9_id.text, m9_slider.value, "pub9")
+
+            
+            
+            CheckBox:
+                id: m10_checkbox
+                group: "checkboxes"
+                color: 1, 1, 1, 1
+                on_active: app.test(m10_id.text)
+                size_hint_x: .20
+                canvas.before:
+                    Color:
+                        rgb: 1,0,0
+                    Ellipse:
+                        pos:self.center_x-8, self.center_y-8
+                        size:[16,16]
+                    Color:
+                        rgb: 0,0,0
+                    Ellipse:
+                        pos:self.center_x-7, self.center_y-7
+                        size:[14,14]
+            Label:
+                text: '35'
+                id: m10_id
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Slider:
+                id: m10_slider
+                value: 0
+                min: 0
+                max: 5
+                step: 1
+                #size_hint:(None, .5)sectiition(m2_id.text, m2_slider.value)
+            TextInput:
+                id: m10_textinput
+                # size_hint_x: None
+                # width: 30
+                input_filter: 'int'
+                multiline: False
+                text: str(m10_slider.value)
+            Label:
+                text: str(m10_slider.value)
+                color: (0,0,1,1)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                id: pub10
+                text: 'Pub'
+                on_press:app.send_position(m10_id.text, m10_slider.value, "pub10")
+
+   
+   
+    # SENSORS
+
+    Label:
+        text: "MOTOR SENSORS"
+        bold: True
+        pos_hint: {'center_x':0.10, 'center_y':0.40}
+
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 3
+        size_hint: None, None
+        height: 100
+        width: 275
+        pos_hint: {'center_x':0.15, 'center_y':0.32}
+
+        
+        Label:
+            text: "Voltage"
+        Label:
+            text: "0.0"
+            id: voltage_id
+            color: (0,0,1,1)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: "V"
+        Label:
+            text: "Current"
+        Label:
+            text: "0.0"
+            id: current_id
+            color: (0,0,1,1)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: "mA"
+        Label:
+            text: "Temperature"
+        Label:
+            text: "0.0"
+            id: temperature_id
+            color: (0,0,1,1)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: "C"
+
+    # Image
+
+    AsyncImage:
+        source: 'robot_map.jpg'
+        #size_hint: .5, .5
+        size_hint: None, None
+        width: 675
+        height: 675
+        pos_hint: {'center_x':.80, 'center_y': .60}        
+    
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 1
+        size_hint: None, None
+        height: 75
+        width: 150
+        pos_hint: {'center_x':0.35, 'center_y':0.32}   
+
+        Button: 
+            id: emergency_stop
+            text: "Emergency Stop"
+            background_color: 1,0,0,1
+            on_press: app.emergency() 
+            #on_press: app.stop()

@@ -1,0 +1,1216 @@
+<?xml version="1.0"?>
+
+<!-- Amir Gholami Jan 2023 / amir.gholami@ucalgary.ca -->
+
+<robot name="transcend">
+
+    <!-- ****************************** COLORS ****************************** -->
+    <material name="black">
+      <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+    <material name="blue">
+      <color rgba="0.0 1.0 1.0 1.0"/>
+    </material>
+    <material name="green">
+      <color rgba="0.0 0.8 0.0 1.0"/>
+    </material>
+    <material name="grey">
+      <color rgba="0.2 0.2 0.2 1.0"/>
+    </material>
+    <material name="orange">
+      <color rgba="0.9764705882352941 0.45098039215686275 0.023529411764705882 1.0"/>
+    </material>
+    <material name="brown">
+      <color rgba="0.396078431372549 0.21568627450980393 0.0 1.0"/>
+    </material>
+    <material name="red">
+      <color rgba="0.8 0.0 0.0 1.0"/>
+    </material>
+    <material name="white">
+      <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+    <material name="yellow">
+      <color rgba="1.0 1.0 0.0 1.0"/>
+    </material>
+    <material name="olive">
+      <color rgba="0.4 0.4 0.2 1.0"/>
+    </material>
+    <material name="light_blue">
+      <color rgba="0.2 0.4 0.6 1.0"/>
+    </material>
+    <material name="light_brown">
+      <color rgba="0.6 0.4 0.2 1.0"/>
+    </material>
+    
+    <!-- ****************************** BASE ****************************** -->
+    <!-- base link -->
+	<link name="base_link" >
+		
+        <visual>
+            <geometry>
+                <box size="0 0 0" />
+            </geometry>
+            <collision>
+                <geometry>
+                    <box size="0 0 0 "/>
+                </geometry>
+            </collision>
+            <material name="black" />
+        </visual>
+        <!-- <inertial> -->
+			<!-- <origin rpy = "0 0 0" xyz = "0 0 0" /> -->
+			<!-- <mass value = "0.0001" /> -->
+			<!-- <inertia ixx = "0.0000" ixy = "0" ixz = "0" iyy = "0.0000" iyz = "0" izz = "0.0000" /> -->
+		<!-- </inertial> -->
+	</link>
+    <!-- pelvis_link --> <!-- root --> 
+    <link name="root">
+        <inertial>
+            <origin xyz="0 -0.09 0" rpy="0 0 0"/> <!-- The centre of mass --> 
+            <mass value="2.74"/>
+            <inertia ixx="0.06" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/> <!--The rotational inertia matrix --> 
+        </inertial> 
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/BASE/transcend_root_reduced.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_brown"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/BASE/transcend_root_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- pelvis joint --> <!-- root --> 
+    <joint name="root" type="fixed" >
+		<parent link ="base_link"/>
+		<child link="root"/>
+			<origin xyz = "0 0 0" rpy = "0 0 0"/>
+	</joint>   
+
+    <!-- ****************************** TORSO ****************************** -->
+    <!-- torso yaw link -->
+    <link name="torso_y">
+        <inertial>
+            <origin xyz="-0.01 0.19 0" rpy="0 0 0"/>
+            <mass value="8.16"/>
+            <inertia ixx="0.45" ixy="-0.02" ixz="0" iyy="0.06" iyz="0" izz="0.43"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/TORSO/transcend_torso_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_blue"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/TORSO/transcend_torso_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- torso yaw joint -->
+    <joint name="torso_y" type="revolute">
+        <parent link="root"/>
+        <child link="torso_y"/>
+            <origin xyz="0 0.008 0" rpy="0.0 0.0 0.0"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>  
+    <!-- head yaw link -->
+    <link name="head_y">
+        <inertial>
+            <origin xyz="0 0.01 0" rpy="0 0 0"/>
+            <mass value="0.08"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/TORSO/transcend_head_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/TORSO/transcend_head_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- head yaw joint -->
+    <joint name="head_y" type="revolute">
+        <parent link="torso_y"/>
+        <child link="head_y"/>
+            <origin xyz="0 0.3402 0" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+    <!-- head pitch link -->
+    <link name="head_p">
+        <inertial>
+            <origin xyz="0.02 0.04 0.21" rpy="0 0 0"/>
+            <mass value="2.96"/>
+            <inertia ixx="0.15" ixy="0" ixz="0.01" iyy="0.15" iyz="0.03" izz="0.02"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/TORSO/transcend_head_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/TORSO/transcend_head_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- head pitch joint -->
+    <joint name="head_p" type="revolute">
+        <parent link="head_y"/>
+        <child link="head_p"/>
+            <origin xyz="0 0.04 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-0.675" upper="0.675" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+
+    <!-- ****************************** HEAD ****************************** -->
+    <!-- right antenna link -->
+    <link name="r_antenna">
+        <inertial>
+            <origin xyz="0.06 -0.05 0.14" rpy="0 0 0"/>
+            <mass value="2.96"/>
+            <inertia ixx="0.08" ixy="-0.01" ixz="0.02" iyy="-0.01" iyz="-0.02" izz="0.03"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/head/transcend_r_antenna_reduced.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/head/transcend_r_antenna_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- right antenna joint -->
+    <joint name="r_antenna" type="revolute">
+        <parent link="head_p"/>
+        <child link="r_antenna"/>
+            <origin xyz="-0.045 0.09 0.055" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-0.675" upper="0.675" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+    <!-- left antenna link -->
+    <link name="l_antenna">
+        <inertial>
+            <origin xyz="0.06 -0.05 0.14" rpy="0 0 0"/>
+            <mass value="2.96"/>
+            <inertia ixx="0.08" ixy="-0.01" ixz="0.02" iyy="-0.01" iyz="-0.02" izz="0.03"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HEAD/transcend_l_antenna_reduced.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HEAD/transcend_l_antenna_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- left antenna joint -->
+    <joint name="l_antenna" type="revolute">
+        <parent link="head_p"/>
+        <child link="l_antenna"/>
+            <origin xyz="-0.045 0.09 -0.055" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-0.675" upper="0.675" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+
+    <!-- ****************************** LEGS ****************************** -->
+    <!-- ******************** right leg ******************** -->
+	<!-- right leg hip yaw link -->
+    <link name="r_leg_hip_y">
+        <inertial>
+      	    <origin xyz="-0.01 -0.2 0" rpy="0 0 0"/>
+      	    <mass value="4.42"/>
+      	    <inertia ixx="0.28" ixy="0.01" ixz="0" iyy="0.01" iyz="0" izz="0.28"/>>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_hip_y_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="light_blue"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_hip_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right leg hip yaw joint -->
+    <joint name="r_leg_hip_y" type="revolute">	
+        <parent link="root"/>
+        <child link="r_leg_hip_y"/>
+            <origin xyz="0 -0.158 0.12" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right leg hip roll link -->
+    <link name="r_leg_hip_r">
+        <inertial>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <mass value="0"/>
+      	    <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>>
+    	</inertial>
+        <visual>
+      	    <origin xyz="0 0.0 0.0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_hip_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="light_blue"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_hip_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right leg hip roll joint -->
+    <joint name="r_leg_hip_r" type="revolute">	
+        <parent link="r_leg_hip_y"/>
+        <child link="r_leg_hip_r"/>
+            <origin xyz="-0.078 -0.074 0" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="-1.571" upper="0" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right leg hip pitch link -->
+    <link name="r_leg_hip_p">
+        <inertial>
+      	    <origin xyz="0 -0.1 0.01" rpy="0 0 0"/>
+      	    <mass value="3.60"/>
+      	    <inertia ixx="0.12" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.12"/>>
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_hip_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="light_blue"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_hip_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right leg hip pitch joint -->
+    <joint name="r_leg_hip_p" type="revolute">	
+        <parent link="r_leg_hip_r"/>
+        <child link="r_leg_hip_p"/>
+            <origin xyz="0.07 -0.05 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right leg knee pitch link -->
+    <link name="r_leg_kn_p">
+        <inertial>
+      	    <origin xyz="0 -0.33 0.01" rpy="0 0 0"/>
+      	    <mass value="4.74"/>
+      	    <inertia ixx="0.65" ixy="0" ixz="0" iyy="0.01" iyz="-0.01" izz="0.65"/> 
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_kn_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_kn_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+	<!-- right leg knee pitch joint -->
+    <joint name="r_leg_kn_p" type="revolute">
+        <parent link="r_leg_hip_p"/>
+        <child link="r_leg_kn_p"/>
+            <origin xyz="0 -0.32 0.01" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.199" upper="0.314" velocity="6.5" effort="1000"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right leg ankle pitch link -->
+    <link name="r_leg_an_p">
+        <inertial>
+      	    <origin xyz="0 0.02 0.01" rpy="0 0 0"/>
+      	    <mass value="4.74"/>
+      	    <inertia ixx="0.15" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.15"/> 
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_an_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_an_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+	<!-- right leg ankle pitch joint -->
+    <joint name="r_leg_an_p" type="revolute">
+        <parent link="r_leg_kn_p"/>
+        <child link="r_leg_an_p"/>
+            <origin xyz="-0.007 -0.35 0.005" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+	<!-- right leg ankle roll link -->
+    <link name="r_leg_an_r">
+        <inertial>
+      	    <origin xyz="0.01 -0.13 0" rpy="0 0 0"/>
+      	    <mass value="1.96"/>
+      	    <inertia ixx="0.04" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.05"/> 
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_an_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_r_leg_an_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+	<!-- right leg ankle roll joint -->
+    <joint name="r_leg_an_r" type="revolute">
+        <parent link="r_leg_an_p"/>
+        <child link="r_leg_an_r"/>
+            <origin xyz="-0.007 0 0.005" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+    <!-- ******************** left leg ******************** -->
+	<!-- left leg hip yaw link -->
+    <link name="l_leg_hip_y">
+        <inertial>
+      	    <origin xyz="-0.01 -0.2 0" rpy="0 0 0"/>
+      	    <mass value="4.42"/>
+      	    <inertia ixx="0.28" ixy="0.01" ixz="0" iyy="0.01" iyz="0" izz="0.28"/>>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_hip_y_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="light_blue"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_hip_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left leg hip yaw joint -->
+    <joint name="l_leg_hip_y" type="revolute">	
+        <parent link="root"/>
+        <child link="l_leg_hip_y"/>
+            <origin xyz="0 -0.158 -0.12" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left leg hip roll link -->
+    <link name="l_leg_hip_r">
+        <inertial>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <mass value="0"/>
+      	    <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>>
+    	</inertial>
+        <visual>
+      	    <origin xyz="0 0.0 0.0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_hip_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="light_blue"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_hip_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>>
+	<!-- left leg hip roll joint -->
+    <joint name="l_leg_hip_r" type="revolute">	
+        <parent link="l_leg_hip_y"/>
+        <child link="l_leg_hip_r"/>
+            <origin xyz="-0.078 -0.074 0" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="0" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left leg hip pitch link -->
+    <link name="l_leg_hip_p">
+        <inertial>
+      	    <origin xyz="0 -0.1 0.01" rpy="0 0 0"/>
+      	    <mass value="3.60"/>
+      	    <inertia ixx="0.12" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.12"/>>
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_hip_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="light_blue"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_hip_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left leg hip pitch joint -->
+    <joint name="l_leg_hip_p" type="revolute">	
+        <parent link="l_leg_hip_r"/>
+        <child link="l_leg_hip_p"/>
+            <origin xyz="0.07 -0.05 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left leg knee pitch link -->
+    <link name="l_leg_kn_p">
+        <inertial>
+      	    <origin xyz="0 -0.33 0.01" rpy="0 0 0"/>
+      	    <mass value="4.74"/>
+      	    <inertia ixx="0.65" ixy="0" ixz="0" iyy="0.01" iyz="-0.01" izz="0.65"/> 
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_kn_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_kn_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+	<!-- left leg knee pitch joint -->
+    <joint name="l_leg_kn_p" type="revolute">
+        <parent link="l_leg_hip_p"/>
+        <child link="l_leg_kn_p"/>
+            <origin xyz="0 -0.32 0.01" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.199" upper="0.314" velocity="6.5" effort="1000"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left leg ankle pitch link -->
+    <link name="l_leg_an_p">
+        <inertial>
+      	    <origin xyz="0 0.02 0.01" rpy="0 0 0"/>
+      	    <mass value="4.74"/>
+      	    <inertia ixx="0.15" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.15"/> 
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_an_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_an_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+	<!-- left leg ankle pitch joint -->
+    <joint name="l_leg_an_p" type="revolute">
+        <parent link="l_leg_kn_p"/>
+        <child link="l_leg_an_p"/>
+            <origin xyz="-0.007 -0.35 0.005" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+	<!-- left leg ankle roll link -->
+    <link name="l_leg_an_r">
+        <inertial>
+      	    <origin xyz="0.01 -0.13 0" rpy="0 0 0"/>
+      	    <mass value="1.96"/>
+      	    <inertia ixx="0.04" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.05"/> 
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_an_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/LEGS/transcend_l_leg_an_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+	<!-- left leg ankle roll joint -->
+    <joint name="l_leg_an_r" type="revolute">
+        <parent link="l_leg_an_p"/>
+        <child link="l_leg_an_r"/>
+            <origin xyz="-0.007 0 0.005" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+
+    <!-- ****************************** ARMS ****************************** -->
+    <!-- ******************** right arm ******************** -->
+	<!-- right arm shoulder pitch 1 link -->
+    <link name="r_arm_sh_p1">
+        <inertial>
+      	    <origin xyz="-0.09 0.02 0.43" rpy="0 0 0"/>
+      	    <mass value="3.37"/>
+      	    <inertia ixx="0.64" ixy="-0.01" ixz="-0.13" iyy="0.67" iyz="0.03" izz="0.03"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_sh_p1_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_sh_p1_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+    <!-- right arm shoulder pitch 1 joint -->
+    <joint name="r_arm_sh_p1" type="revolute">		
+        <parent link="torso_y"/>
+        <child link="r_arm_sh_p1"/>
+            <origin xyz="0 0.28 0.155" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+	<!-- right arm shoulder roll link -->
+    <link name="r_arm_sh_r">
+        <inertial>
+      	    <origin xyz="-0.09 0.02 0.43" rpy="0 0 0"/>
+      	    <mass value="3.37"/>
+      	    <inertia ixx="0.46" ixy="0" ixz="-0.05" iyy="0.46" iyz="0.02" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_sh_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_sh_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+    <!-- right shoulder roll joint -->
+    <joint name="r_arm_sh_r" type="revolute">		
+        <parent link="r_arm_sh_p1"/>
+        <child link="r_arm_sh_r"/>
+            <origin xyz="-0.048 0 0.07" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="-1.571" upper="0" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+	<!-- right arm shoulder pitch 2 link -->
+    <link name="r_arm_sh_p2">
+        <inertial>
+      	    <origin xyz="-0.09 0.2 0.36" rpy="0 0 0"/>
+      	    <mass value="3.37"/>
+      	    <inertia ixx="0.59" ixy="-0.06" ixz="-0.11" iyy="0.48" iyz="0.24" izz="0.17"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_sh_p2_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_sh_p2_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+    <!-- right shoulder pitch 2 joint -->
+    <joint name="r_arm_sh_p2" type="revolute">		
+        <parent link="r_arm_sh_r"/>
+        <child link="r_arm_sh_p2"/>
+            <origin xyz="0.04 -0.185 0" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0.0"/>
+    </joint>
+	<!-- right arm elbow yaw link -->
+    <link name="r_arm_el_y">
+        <inertial>
+      	    <origin xyz="0 -0.14 -0.05" rpy="0 0 0"/>
+      	    <mass value="5.41"/>
+      	    <inertia ixx="0.19" ixy="0" ixz="0" iyy="0.02" iyz="0.03" izz="0.17"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_el_y_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_el_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm elbow yaw joint -->
+    <joint name="r_arm_el_y" type="revolute">
+        <parent link="r_arm_sh_p2"/>
+        <child link="r_arm_el_y"/>	
+            <origin xyz="0 -0.08 0.058" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right arm wrist roll link -->
+    <link name="r_arm_wr_r">
+        <inertial>
+      	    <origin xyz="0 0 0.02" rpy="0 0 0"/>
+      	    <mass value="5.41"/>
+      	    <inertia ixx="0.07" ixy="0" ixz="0" iyy="0.01" iyz="-0.01" izz="0.06"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_wr_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_wr_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm wrist roll joint -->
+    <joint name="r_arm_wr_r" type="revolute">	
+        <parent link="r_arm_el_y"/>
+        <child link="r_arm_wr_r"/>
+            <origin xyz="0 -0.13 -0.067" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right arm wrist yaw link -->
+    <link name="r_arm_wr_y">
+        <inertial>
+      	    <origin xyz="0 0.09 0.02" rpy="0 0 0"/>
+      	    <mass value="5.41"/>
+      	    <inertia ixx="0.11" ixy="0" ixz="0" iyy="0.01" iyz="0.02" izz="0.11"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_wr_y_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_wr_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm wrist yaw joint -->
+    <joint name="r_arm_wr_y" type="revolute">	
+        <parent link="r_arm_wr_r"/>
+        <child link="r_arm_wr_y"/>
+            <origin xyz="0 -0.1 0.04" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right arm wrist pitch link -->
+    <link name="r_arm_wr_p">
+        <inertial>
+      	    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+       	<visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_wr_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_r_arm_wr_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm wrist pitch joint -->
+    <joint name="r_arm_wr_p" type="revolute">	
+        <parent link="r_arm_wr_y"/>
+        <child link="r_arm_wr_p"/>
+            <origin xyz="0 -0.032 -0.04" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right arm grip thumb link -->
+    <link name="r_arm_grip_thumb">
+        <inertial>
+      	    <origin xyz="-0.02 0.05 -0.02" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_r_arm_grip_thumb_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_r_arm_grip_thumb_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm grip thumb joint -->
+    <joint name="r_arm_grip_thumb" type="revolute">	
+        <parent link="r_arm_wr_p"/>
+        <child link="r_arm_grip_thumb"/>
+            <origin xyz="0.025 -0.108 -0.03" rpy="0.785398 0 0"/>
+            <axis xyz="1 0 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right arm grip index link -->
+    <link name="r_arm_grip_index">
+        <inertial>
+      	    <origin xyz="-0.02 0.07 0.02" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_r_arm_grip_index_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_r_arm_grip_index_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm grip index joint -->
+    <joint name="r_arm_grip_index" type="revolute">	
+        <parent link="r_arm_wr_p"/>
+        <child link="r_arm_grip_index"/>
+            <origin xyz="0.025 -0.135 0.025" rpy="-0.785398 0 0"/>
+            <axis xyz="1 0 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- right arm grip middle link -->
+    <link name="r_arm_grip_middle">
+        <inertial>
+      	    <origin xyz="0.03 0.02 -0.07" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_r_arm_grip_middle_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_r_arm_grip_middle_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- right arm grip middle joint -->
+    <joint name="r_arm_grip_middle" type="revolute">	
+        <parent link="r_arm_wr_p"/>
+        <child link="r_arm_grip_middle"/>
+            <origin xyz="-0.025 -0.135 0.025" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+    <!-- ******************** left arm ******************** -->
+	<!-- left arm shoulder pitch 1 link -->
+    <link name="l_arm_sh_p1">
+        <inertial>
+      	    <origin xyz="-0.09 -0.02 -0.43" rpy="0 0 0"/>
+      	    <mass value="3.37"/>
+      	    <inertia ixx="0.64" ixy="0.01" ixz="0.13" iyy="0.67" iyz="0.03" izz="0.03"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_sh_p1_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_sh_p1_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+    <!-- left arm shoulder pitch 1 joint -->
+    <joint name="l_arm_sh_p1" type="revolute">		
+        <parent link="torso_y"/>
+        <child link="l_arm_sh_p1"/>
+            <origin xyz="0 0.28 -0.155" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+	<!-- left arm shoulder roll link -->
+    <link name="l_arm_sh_r">
+        <inertial>
+      	    <origin xyz="-0.09 0.02 0.43" rpy="0 0 0"/>
+      	    <mass value="3.37"/>
+      	    <inertia ixx="0.46" ixy="0" ixz="-0.05" iyy="0.46" iyz="0.02" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_sh_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_sh_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link> 
+    <!-- left arm shoulder roll joint -->
+    <joint name="l_arm_sh_r" type="revolute">		
+        <parent link="l_arm_sh_p1"/>
+        <child link="l_arm_sh_r"/>
+            <origin xyz="-0.048 0 -0.07" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="0" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0.0"/>
+    </joint>
+	<!-- left arm shoulder pitch 2 link -->
+    <link name="l_arm_sh_p2">
+        <inertial>
+      	    <origin xyz="0.09 0.2 -0.36" rpy="0 0 0"/>
+      	    <mass value="3.37"/>
+      	    <inertia ixx="0.59" ixy="0.06" ixz="-0.11" iyy="0.48" iyz="-0.24" izz="0.17"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_sh_p2_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_sh_p2_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>    
+    <!-- left arm shoulder pitch 2 joint -->
+    <joint name="l_arm_sh_p2" type="revolute">		
+        <parent link="l_arm_sh_r"/>
+        <child link="l_arm_sh_p2"/>
+            <origin xyz="0.04 -0.185 0" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint>
+	<!-- left arm elbow yaw link -->
+    <link name="l_arm_el_y">
+        <inertial>
+      	    <origin xyz="0 -0.14 0.05" rpy="0 0 0"/>
+      	    <mass value="5.41"/>
+      	    <inertia ixx="0.19" ixy="0" ixz="0" iyy="0.02" iyz="-0.03" izz="0.17"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_el_y_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="orange"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_el_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm elbow yaw joint -->
+    <joint name="l_arm_el_y" type="revolute">
+        <parent link="l_arm_sh_p2"/>
+        <child link="l_arm_el_y"/>
+            <origin xyz="0 -0.08 -0.058" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left arm wrist roll link -->
+    <link name="l_arm_wr_r">
+        <inertial>
+      	    <origin xyz="-0.03 -0.03 -0.14" rpy="0 0 0"/>
+      	    <mass value="5.41"/>
+      	    <inertia ixx="0.16" ixy="0.03" ixz="0.02" iyy="0.13" iyz="0.02" izz="0.07"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_wr_r_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_wr_r_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm wrist roll joint -->
+    <joint name="l_arm_wr_r" type="revolute">	
+        <parent link="l_arm_el_y"/>
+        <child link="l_arm_wr_r"/>
+            <origin xyz="0 -0.13 0.067" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left arm wrist yaw link -->
+    <link name="l_arm_wr_y">
+        <inertial>
+      	    <origin xyz="0 0.09 0.02" rpy="0 0 0"/>
+      	    <mass value="5.41"/>
+      	    <inertia ixx="0.11" ixy="0" ixz="0" iyy="0.01" iyz="0.02" izz="0.11"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_wr_y_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_wr_y_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm wrist yaw joint -->
+    <joint name="l_arm_wr_y" type="revolute">	
+        <parent link="l_arm_wr_r"/>
+        <child link="l_arm_wr_y"/>
+            <origin xyz="0 -0.1 -0.04" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left arm wrist pitch link -->
+    <link name="l_arm_wr_p">
+        <inertial>
+      	    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+      	    <mass value="1.15"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_wr_p_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/ARMS/transcend_l_arm_wr_p_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm wrist pitch joint -->
+    <joint name="l_arm_wr_p" type="revolute">	
+        <parent link="l_arm_wr_y"/>
+        <child link="l_arm_wr_p"/>
+            <origin xyz="0 -0.032 0.04" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left arm grip thumb link -->
+    <link name="l_arm_grip_thumb">
+        <inertial>
+      	    <origin xyz="0.02 0.05 0.02" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_l_arm_grip_thumb_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_l_arm_grip_thumb_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm grip thumb joint -->
+    <joint name="l_arm_grip_thumb" type="revolute">	
+        <parent link="l_arm_wr_p"/>
+        <child link="l_arm_grip_thumb"/>
+            <origin xyz="0.025 -0.108 0.03" rpy="-0.785398 0 0"/>
+            <axis xyz="1 0 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left arm grip index link -->
+    <link name="l_arm_grip_index">
+        <inertial>
+      	    <origin xyz="0.02 0.07 -0.02" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_l_arm_grip_index_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_l_arm_grip_index_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm grip index joint -->
+    <joint name="l_arm_grip_index" type="revolute">	
+        <parent link="l_arm_wr_p"/>
+        <child link="l_arm_grip_index"/>
+            <origin xyz="0.025 -0.135 -0.025" rpy="0.785398 0 0"/>
+            <axis xyz="1 0 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+	<!-- left arm grip middle link -->
+    <link name="l_arm_grip_middle">
+        <inertial>
+      	    <origin xyz="-0.03 0.02 0.07" rpy="0 0 0"/>
+      	    <mass value="1.13"/>
+      	    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.01"/>
+    	</inertial>
+   	    <visual>
+      	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      	    <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_l_arm_grip_middle_reduced.STL" scale="1 1 1"/>
+      	    </geometry>
+      	    <material name="olive"/>
+    	</visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://urdf-rviz/Meshes/HANDS/transcend_l_arm_grip_middle_reduced.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+	<!-- left arm grip middle joint -->
+    <joint name="l_arm_grip_middle" type="revolute">	
+        <parent link="l_arm_wr_p"/>
+        <child link="l_arm_grip_middle"/>
+            <origin xyz="-0.025 -0.135 -0.025" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>	
+            <limit lower="-1.571" upper="1.571" effort="1000" velocity="6.5"/>
+            <dynamics damping="0.1" friction="0"/>
+    </joint> 
+
+</robot>

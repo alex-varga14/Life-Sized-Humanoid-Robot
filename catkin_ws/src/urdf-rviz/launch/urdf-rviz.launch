@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="/home/glorycode/catkin_ws/src/urdf-rviz/urdf/transcent_urdf.urdf"/>
+  <arg name="gui" default="false" />
+  <arg name="rvizconfig" default="/home/glorycode/catkin_ws/src/urdf-rviz/rviz/rviz_basic_settings.rviz" />
+  <param name="robot_description" command="$(find xacro)/xacro /home/glorycode/catkin_ws/src/urdf-rviz/urdf/transcent_urdf.urdf" />
+  <!-- <param name="robot_description" textfile="$(arg model)" /> -->
+
+  <!--                RVIZ                   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" output="screen" />
+
+<!--                PUBLISHERS                   -->
+  <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="map_frame" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 base_link map 10" />
+  
+  
+<!--                RVIZ CAMERA INFO                   -->
+  <group ns="camera1">
+    <node name="temp_frame" pkg="tf" type="static_transform_publisher" args="2.0 0 -0.5 0 -1.571 0 map temp 10" />
+    <node name="camera_frame" pkg="tf" type="static_transform_publisher" args="0 0 0 1.571 0 0 temp camera1 10" />
+    <node name="camera_info" pkg="rostopic" type="rostopic"
+      args="pub camera_info sensor_msgs/CameraInfo
+      '{header: {seq: 0, stamp: {secs: 0, nsecs: 0}, frame_id: 'camera1'},
+      height: 480, width: 640, distortion_model: 'plumb_bob',
+      D: [0],
+      K: [500.0, 0.0, 320, 0.0, 500.0, 240.0, 0.0, 0.0, 1.0],
+      R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0],
+      P: [500.0, 0.0, 320, 0.0, 0.0, 500, 240, 0.0, 0.0, 0.0, 1.0, 0.0],
+      binning_x: 0, binning_y: 0,
+      roi: {x_offset: 0, y_offset: 0, height: 480, width: 640, do_rectify: false}}' -r 2"
+    output="screen"/>
+  </group>
+
+  <node name="orbit_frame" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 temp orbit 10" />
+
+<!--                BROADCAST TO BROWSER                   -->
+  <node name="web_video_server" pkg="web_video_server" type="web_video_server" output="screen" />
+    <!-- View Stream at:http://localhost:8080/stream?topic=/rviz1/camera1/image -->
+
+    <group ns="rviz1/camera1/image">
+  <rosparam param="disable_pub_plugins">
+    - 'image_transport/compressed'
+    - 'image_transport/compressedDepth'
+    - 'image_transport/theora'
+  </rosparam>
+  </group>
+
+</launch>

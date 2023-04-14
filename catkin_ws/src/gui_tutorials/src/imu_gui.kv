@@ -1,0 +1,40 @@
+FloatLayout:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: 'IMU GUI'
+        size_hint: None, None
+        size: 300, 300
+        bold: True
+        id: test
+        pos_hint: {'center_x':0.5, 'center_y':0.97}
+   
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 3
+        size_hint: None, None
+        height: 100
+        width: 400
+        pos_hint: {'center_x':0.50, 'center_y':0.50}
+
+        Button:
+            id: imu_linear_acc
+            text: 'Linear Acc'
+            on_press:app.linear_acc(imu_linear_acc.text)
+        Button:
+            id: imu_angular_vel
+            text: 'Angular velocity'
+            on_press:app.angular_vel(imu_angular_vel.text)
+        Button:
+            id: IMU_rviz
+            text: 'IMU rviz'
+            on_press:app.imu_rviz(IMU_rviz.text)

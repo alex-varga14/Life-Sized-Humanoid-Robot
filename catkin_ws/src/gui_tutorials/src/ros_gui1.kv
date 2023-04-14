@@ -1,0 +1,164 @@
+FloatLayout:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    Label:
+        text: 'Humanoid Robot Control'
+        size_hint: None, None
+        size: 300, 300
+        bold: True
+        id: test
+        pos_hint: {'center_x':0.5, 'center_y':0.97}
+
+    Label:
+        text: 'Robot Sections'
+        bold: True
+        id: robot_sections
+        pos_hint: {'center_x':0.15, 'center_y':0.87}
+        size_hint: None, None
+        size: 100, 100
+
+    # Robot Section
+
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 2
+        size_hint: None, None
+        height: 100
+        width: 300
+        pos_hint: {'center_x':0.25, 'center_y':0.75}
+
+        Button:
+            id: head
+            text: 'Head'
+            on_press:app.motor_section_show(head.text)
+        Button:
+            id: torso
+            text: 'Torso'
+            on_press:app.motor_section_show(torso.text)
+        Button:
+            id: left_arm
+            text: 'Left Arm'
+            on_press:app.motor_section_show(left_arm.text)
+        Button:
+            id: right_arm
+            text: 'Right Arm'
+            on_press:app.motor_section_show(right_arm.text)
+        
+        Button:
+            id: left_leg
+            text: 'Left Leg'
+            on_press:app.motor_section_show(left_leg.text)
+        Button:
+            id: right_leg
+            text: 'Right Leg'
+            on_press:app.motor_section_show(right_leg.text)
+        
+    # Image
+
+    AsyncImage:
+        source: 'robot_map.jpg'
+        #size_hint: .5, .5
+        size_hint: None, None
+        width: 800
+        height: 800
+        pos_hint: {'center_x':.70, 'center_y': .50}
+    
+    # Demos
+    Label:
+        text: "Demos"
+        bold: True
+        pos_hint: {'center_x':0.15, 'center_y':0.67}
+
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 2
+        size_hint: None, None
+        height: 100
+        width: 300
+        pos_hint: {'center_x':0.25, 'center_y':0.57}   
+
+        Button: 
+            id: wave_left_arm
+            text: "Wave Left Arm"
+            on_press: app.wave_left_arm('wave_left_arm')
+        Button: 
+            id: wave_right_arm
+            text: "Wave Right Arm"
+            on_press: app.wave_right_arm('wave_right_arm')
+        
+        
+    # Sensor Buttons
+    Label:
+        text: "Sensors"
+        bold: True
+        pos_hint: {'center_x':0.15, 'center_y':0.47}
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 2
+        size_hint: None, None
+        height: 100
+        width: 300
+        pos_hint: {'center_x':0.25, 'center_y':0.37}   
+
+        Button: 
+            id: imu
+            text: "IMU"
+            on_press:app.motor_section_show(imu.text)
+
+        Button: 
+            id: velo
+            text: "Velodyne"
+            on_press: app.velo_bag()
+        
+        Button: 
+            id: camera
+            text: "RealSense Camera"
+            on_press: app.camera_bag()
+        
+        Button: 
+            id: force
+            text: "Force Torque"
+            on_press: app.force_bag()
+
+    GridLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 1
+        size_hint: None, None
+        height: 75
+        width: 150
+        pos_hint: {'center_x':0.25, 'center_y':0.24}   
+
+        Button: 
+            id: emergency_stop
+            text: "Emergency Stop"
+            background_color: 1,0,0,1
+            on_press: app.emergency() 
+            #on_press: app.stop()
+
+
+

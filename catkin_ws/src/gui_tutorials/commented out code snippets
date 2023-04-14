@@ -1,0 +1,36 @@
+
+ 
+from read_Write_node.py:
+#if os.name == 'nt':
+#     import msvcrt
+#     def getch():
+#         return msvcrt.getch().decode()
+# else:
+#     import sys, tty, termios
+#     fd = sys.stdin.fileno()
+#     old_settings = termios.tcgetattr(fd)
+#     def getch():
+#         try:
+#             tty.setraw(sys.stdin.fileno())
+#             ch = sys.stdin.read(1)
+#         finally:
+#             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+#         return ch
+
+
+
+
+from robot section.py:
+
+ # def test_callback(self, id):
+    #     process = subprocess.Popen(['rosservice', 'call', '/get_motor_sensors', id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #     i = 0
+    #     out = [0]*3
+    #     for line in process.stdout:
+    #         out[i] = (re.sub('[^0-9]','', line.decode("ascii")))
+    #         i+=1
+
+    #     self.screen.ids.current_id.text = str(out[0])    
+    #     self.screen.ids.voltage_id.text = str(float(out[1])/10)
+    #     self.screen.ids.temperature_id.text = str(out[2])
+        # time.sleep(10)

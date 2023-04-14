@@ -1,0 +1,3 @@
+<launch>
+	<node name="motor_sensor" pkg="gui_tutorials" type="sensor.py" output="screen"/>
+</launch>

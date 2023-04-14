@@ -1,0 +1,52 @@
+FloatLayout:
+    orientation: "vertical"
+
+    MDTopAppBar:
+        title: "Humanoid Control Panel"
+        left_action_items: [["menu", lambda x: app.callback(), "Menu"]]
+        right_action_items: [["robot-confused-outline", lambda x: app.callback_1()], ["power", lambda x: app.callback_2()]]
+        size_hint: 1, .1
+        pos_hint: {"center_x": .5, "center_y": 0.95}
+
+    MDLabel:
+        id: lbl1
+        text: "URDF"
+        size_hint: 0.5, 0.5
+        pos_hint: {"center_x": .25, "center_y": 0.5}
+
+    Button:
+        id: btn 
+        text: "Load Demo:"
+        halign: "center"
+        size_hint: 0.25, 0.1
+        pos_hint: {"center_x": .75, "center_y": 0.8}
+        on_parent: drop_content.dismiss()
+        on_release: drop_content.open(self)
+
+    DropDown:
+        id: drop_content
+        on_select: btn.text = '{}'.format(args[1])
+
+        Button:
+            id: btn1
+            text: 'First Item'
+            size_hint_y: None
+            height: 35
+            on_release: drop_content.select('First Item')
+        
+        Button:
+            id: btn2
+            text: 'Second Item'
+            size_hint_y: None
+            height: 35
+            on_release: drop_content.select('Second Item')
+
+
+    MDTabs:
+        id: tabs
+        size_hint: 1, .1
+        pos_hint: {"center_x": .5, "center_y": 0.01}
+        on_tab_switch: app.on_tab_switch(*args)
+       
+        
+        
